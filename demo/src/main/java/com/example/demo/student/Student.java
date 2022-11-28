@@ -1,14 +1,15 @@
 package com.example.demo.student;
 
 import java.time.LocalDate;
+import java.time.Period;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table
@@ -24,28 +25,27 @@ public class Student {
         strategy = GenerationType.SEQUENCE,
         generator = "student_sequence"
     )
+
     private Long id;
     private String name;
-    private Integer age;
     private LocalDate dob;
     private String email;
+    
 
 
     public Student() {
 
     }
 
-    public Student(Long id, String name, String email, LocalDate dob, Integer age) {
+    public Student(Long id, String name, String email, LocalDate dob) {
         this.id = id;
         this.name = name;
-        this.age = age;
         this.dob = dob;
         this.email = email;
     }
 
-    public Student(String name, String email, LocalDate dob, Integer age) {
+    public Student(String name, String email, LocalDate dob) {
         this.name = name;
-        this.age = age;
         this.dob = dob;
         this.email = email;
     }
@@ -68,12 +68,12 @@ public class Student {
     }
 
     public Integer getAge() {
-        return this.age;
+        return Period.between(this.dob, LocalDate.now()).getYears();
     }
 
-    public void setAge(Integer age) {
-        this.age = age;
-    }
+    //public void setAge(Integer age) {
+    //    this.age = age;
+    //}
 
     public LocalDate getDob() {
         return this.dob;
